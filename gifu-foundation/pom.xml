@@ -4,12 +4,15 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>plus.gifu</groupId>
-    <artifactId>gifu</artifactId>
+    <groupId>plus.gifu.foundation</groupId>
+    <artifactId>gifu-foundation</artifactId>
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
-        <module>gifu-foundation</module>
+        <module>gifu-foundation-dependencies</module>
+        <module>gifu-foundation-parent</module>
+        <module>gifu-foundation-starter</module>
     </modules>
+
 
 </project>
