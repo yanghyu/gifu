@@ -10,6 +10,9 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>gifu-foundation</module>
+        <module>gifu-cloud</module>
+        <module>gifu-data</module>
+        <module>gifu-mq</module>
     </modules>
 
 </project>
