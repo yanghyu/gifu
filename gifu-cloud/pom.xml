@@ -11,6 +11,7 @@
         <module>gifu-cloud-dependencies</module>
         <module>gifu-cloud-parent</module>
         <module>gifu-cloud-starter</module>
+        <module>gifu-cloud-eureka</module>
     </modules>
     <packaging>pom</packaging>
 
