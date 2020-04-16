@@ -15,4 +15,18 @@
         <maven.compiler.target>11</maven.compiler.target>
     </properties>
 
+    <distributionManagement>
+        <repository>
+            <!-- 此id要与setting.xml里面server的id对应 -->
+            <id>gifu-releases</id>
+            <name>Gifu Releases Repository</name>
+            <url>http://nexus.gifu.plus:30500/repository/maven-releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>gifu-snapshots</id>
+            <name>Gifu Snapshots Repository</name>
+            <url>http://nexus.gifu.plus:30500/repository/maven-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
+
 </project>

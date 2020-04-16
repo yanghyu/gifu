@@ -9,5 +9,18 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
+    <distributionManagement>
+        <repository>
+            <!-- 此id要与setting.xml里面server的id对应 -->
+            <id>gifu-releases</id>
+            <name>Gifu Releases Repository</name>
+            <url>http://nexus.gifu.plus:30500/repository/maven-releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>gifu-snapshots</id>
+            <name>Gifu Snapshots Repository</name>
+            <url>http://nexus.gifu.plus:30500/repository/maven-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
 
 </project>
