@@ -10,21 +10,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>gifu-foundation-starter</artifactId>
-    <packaging>pom</packaging>
+    <artifactId>gifu-foundation-encryption</artifactId>
 
-    <modules>
-        <module>gifu-foundation-starter-encryption</module>
-    </modules>
-
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>gifu-foundation-starter-encryption</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
 
 </project>

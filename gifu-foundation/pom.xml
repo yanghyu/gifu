@@ -13,6 +13,7 @@
         <module>gifu-foundation-parent</module>
         <module>gifu-foundation-starter</module>
         <module>gifu-foundation-lang</module>
+        <module>gifu-foundation-encryption</module>
     </modules>
 
     <distributionManagement>
