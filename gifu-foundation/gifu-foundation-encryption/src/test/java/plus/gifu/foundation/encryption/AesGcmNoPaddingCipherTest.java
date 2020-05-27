@@ -1,10 +1,12 @@
 package plus.gifu.foundation.encryption;
 
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 
+@Slf4j
 class AesGcmNoPaddingCipherTest {
 
     @Test
