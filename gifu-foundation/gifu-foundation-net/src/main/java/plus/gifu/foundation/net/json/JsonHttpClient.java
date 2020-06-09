@@ -1,6 +1,8 @@
 package plus.gifu.foundation.net.json;
 
 import com.alibaba.fastjson.JSON;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -18,6 +20,8 @@ import java.util.Map;
  * @since 2020-06-09
  */
 public class JsonHttpClient {
+
+    private static final Logger log = LoggerFactory.getLogger(JsonHttpClient.class);
 
     /**
      * 连接超时时间
@@ -76,7 +80,7 @@ public class JsonHttpClient {
             resolveResult(connection, callback);
         } catch (IOException e) {
             callback.fail("{ \"resultCode\": \"FAIL\", \"resultMessage\": \"请求发送失败！\" }");
-            e.printStackTrace();
+            log.error("发送请求失败！", e);
         } finally {
             if (outputStream != null) {
                 try {
