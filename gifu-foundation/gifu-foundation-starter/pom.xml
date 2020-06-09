@@ -15,10 +15,16 @@
 
     <modules>
         <module>gifu-foundation-starter-encryption</module>
+        <module>gifu-foundation-starter-lang</module>
     </modules>
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>gifu-foundation-starter-lang</artifactId>
+                <version>${project.version}</version>
+            </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>gifu-foundation-starter-encryption</artifactId>
