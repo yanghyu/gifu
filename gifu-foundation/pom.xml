@@ -14,6 +14,7 @@
         <module>gifu-foundation-starter</module>
         <module>gifu-foundation-lang</module>
         <module>gifu-foundation-encryption</module>
+        <module>gifu-foundation-net</module>
     </modules>
 
     <distributionManagement>
