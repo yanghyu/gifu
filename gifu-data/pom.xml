@@ -12,6 +12,8 @@
         <module>gifu-data-dependencies</module>
         <module>gifu-data-parent</module>
         <module>gifu-data-starter</module>
+        <module>gifu-data-redis</module>
+        <module>gifu-data-leaf</module>
     </modules>
 
     <distributionManagement>
