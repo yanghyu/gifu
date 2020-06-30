@@ -1,4 +1,4 @@
-package plus.gifu.foundation.encryption;
+package plus.gifu.foundation.encryption.cipher;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;

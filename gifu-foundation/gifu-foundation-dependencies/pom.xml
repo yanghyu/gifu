@@ -18,8 +18,10 @@
 
         <lombok.version>1.18.12</lombok.version>
         <slf4j.version>1.7.25</slf4j.version>
-        <junit-jupiter.version>5.7.0-M1</junit-jupiter.version>
         <fastjson.version>1.2.60</fastjson.version>
+        <bc.version>1.60</bc.version>
+
+        <junit-jupiter.version>5.7.0-M1</junit-jupiter.version>
     </properties>
 
     <dependencyManagement>
@@ -38,6 +40,11 @@
                 <groupId>com.alibaba</groupId>
                 <artifactId>fastjson</artifactId>
                 <version>${fastjson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.bouncycastle</groupId>
+                <artifactId>bcprov-jdk15on</artifactId>
+                <version>${bc.version}</version>
             </dependency>
 
             <dependency>
