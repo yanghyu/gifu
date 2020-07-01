@@ -11,6 +11,13 @@
 
     <artifactId>gifu-data-leaf</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+        </dependency>
+    </dependencies>
+
 
 
 </project>
