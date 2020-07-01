@@ -16,7 +16,7 @@ public class SHA256Digest {
      * @return 摘要结果
      * @throws NoSuchAlgorithmException 异常
      */
-    public static byte[] digestBySHA256(byte[] data) throws NoSuchAlgorithmException {
+    public static byte[] digest(byte[] data) throws NoSuchAlgorithmException {
         if (data == null || data.length == 0) {
             return new byte[0];
         }
@@ -30,9 +30,9 @@ public class SHA256Digest {
      * @param str 输入字符串（要求非空，长度大于1）
      * @return base64格式摘要
      */
-    public static String digestBySHA256(String str) {
+    public static String digest(String str) {
         try {
-            return ENCODER.encodeToString(digestBySHA256(str.getBytes()));
+            return ENCODER.encodeToString(digest(str.getBytes()));
         } catch (NoSuchAlgorithmException e) {
             // 不会有异常啦
             e.printStackTrace();
