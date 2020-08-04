@@ -1,4 +1,4 @@
-package plus.data.leaf.segment;
+package plus.gifu.data.leaf.segment.generater;
 
 /**
  * ID 生成器
@@ -8,6 +8,12 @@ package plus.data.leaf.segment;
  */
 public interface IdGenerator {
 
+    /**
+     * 生成ID
+     *
+     * @param key   键名
+     * @return      ID
+     */
     Long generateId(String key);
 
 }

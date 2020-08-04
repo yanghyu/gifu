@@ -14,6 +14,8 @@
         <module>gifu-data-starter</module>
         <module>gifu-data-redis</module>
         <module>gifu-data-leaf</module>
+        <module>gifu-data-autoconfigure</module>
+        <module>gifu-data-server</module>
     </modules>
 
     <distributionManagement>

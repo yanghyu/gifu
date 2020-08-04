@@ -1,4 +1,4 @@
-package plus.data.leaf.segment.model;
+package plus.gifu.data.leaf.segment.model;
 
 /**
  * Key序列
@@ -26,7 +26,7 @@ public class KeySequence {
     /**
      * 版本号
      */
-    private Integer version;
+    private Long version;
 
     /**
      * 创建时间
@@ -67,11 +67,11 @@ public class KeySequence {
         this.step = step;
     }
 
-    public Integer getVersion() {
+    public Long getVersion() {
         return version;
     }
 
-    public void setVersion(Integer version) {
+    public void setVersion(Long version) {
         this.version = version;
     }
 

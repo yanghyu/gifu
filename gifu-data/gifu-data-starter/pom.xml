@@ -12,5 +12,33 @@
 
     <artifactId>gifu-data-starter</artifactId>
     <packaging>pom</packaging>
+    <modules>
+        <module>gifu-data-starter-leaf</module>
+    </modules>
+
+    <properties>
+        <spring-boot.version>2.1.2.RELEASE</spring-boot.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>plus.gifu.data</groupId>
+            <artifactId>gifu-data-autoconfigure</artifactId>
+        </dependency>
+    </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>gifu-data-starter-leaf</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
 </project>
