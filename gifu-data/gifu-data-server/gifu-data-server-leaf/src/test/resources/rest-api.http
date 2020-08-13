@@ -1,13 +1,12 @@
-# curl -i http://httpbin.org/ip
 
-GET http://localhost:8080/ids/next?key=default
+###
+
+GET http://localhost:8080/ids/next?key={{default}}
 
 ###
 
 
-
-###
-
+### Demo
 ### GET request with a header
 GET https://httpbin.org/ip
 Accept: application/json
