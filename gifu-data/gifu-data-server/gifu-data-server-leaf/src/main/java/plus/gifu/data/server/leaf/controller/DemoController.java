@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
  * 示例 控制器
  *
  * @author yanghongyu
- * @since 20200608
+ * @since 2020-06-08
  */
 @RequestMapping("/demo")
 @RestController

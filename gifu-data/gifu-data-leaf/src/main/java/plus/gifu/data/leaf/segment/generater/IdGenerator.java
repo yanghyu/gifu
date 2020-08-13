@@ -1,5 +1,7 @@
 package plus.gifu.data.leaf.segment.generater;
 
+import plus.gifu.data.leaf.segment.model.IdResult;
+
 /**
  * ID 生成器
  *
@@ -14,6 +16,6 @@ public interface IdGenerator {
      * @param key   键名
      * @return      ID
      */
-    Long generateId(String key);
+    IdResult generateId(String key);
 
 }

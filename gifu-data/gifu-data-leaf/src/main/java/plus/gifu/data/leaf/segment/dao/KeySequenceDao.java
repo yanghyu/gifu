@@ -14,7 +14,7 @@ import javax.sql.DataSource;
 
 public class KeySequenceDao {
 
-    private SqlSessionFactory sqlSessionFactory;
+    private final SqlSessionFactory sqlSessionFactory;
 
     public KeySequenceDao(DataSource dataSource) {
         TransactionFactory transactionFactory = new JdbcTransactionFactory();
