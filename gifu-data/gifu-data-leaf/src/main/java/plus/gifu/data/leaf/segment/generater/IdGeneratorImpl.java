@@ -24,7 +24,7 @@ public class IdGeneratorImpl implements IdGenerator {
     public IdResult generateId(String key) {
         KeySequence keySequence = keySequenceDao.get(key);
         IdResult idResult = new IdResult();
-        idResult.setId(keySequence.getSequenceId());
+        idResult.setId(keySequence.getMaxId());
         return idResult;
     }
 

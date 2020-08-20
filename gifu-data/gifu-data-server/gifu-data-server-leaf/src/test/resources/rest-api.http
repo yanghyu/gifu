@@ -1,7 +1,7 @@
 
 ###
 
-GET http://localhost:8080/ids/next?key={{default}}
+GET http://{{host}}/ids/next?key=default
 
 ###
 

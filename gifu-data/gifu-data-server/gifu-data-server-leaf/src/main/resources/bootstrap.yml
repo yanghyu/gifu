@@ -1,7 +1,1 @@
 
-#spring:
-#  datasource:
-#    url: jdbc:mysql://localhost:3306/gifu_data_leaf
-#    username: root
-#    password: xcvgty!@56WW
-#    driver-class-name: com.mysql.jdbc.Driver

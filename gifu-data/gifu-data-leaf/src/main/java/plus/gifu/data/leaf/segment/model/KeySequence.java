@@ -14,9 +14,9 @@ public class KeySequence {
     private String key;
 
     /**
-     * 序列号
+     * 最大序列号
      */
-    private Long sequenceId;
+    private Long maxId;
 
     /**
      * 步长
@@ -51,12 +51,12 @@ public class KeySequence {
         this.key = key;
     }
 
-    public Long getSequenceId() {
-        return sequenceId;
+    public Long getMaxId() {
+        return maxId;
     }
 
-    public void setSequenceId(Long sequenceId) {
-        this.sequenceId = sequenceId;
+    public void setMaxId(Long maxId) {
+        this.maxId = maxId;
     }
 
     public Integer getStep() {
