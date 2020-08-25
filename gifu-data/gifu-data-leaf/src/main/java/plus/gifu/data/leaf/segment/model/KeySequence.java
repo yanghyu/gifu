@@ -19,11 +19,6 @@ public class KeySequence {
     private Long maxId;
 
     /**
-     * 步长
-     */
-    private Integer step;
-
-    /**
      * 版本号
      */
     private Long version;
@@ -57,14 +52,6 @@ public class KeySequence {
 
     public void setMaxId(Long maxId) {
         this.maxId = maxId;
-    }
-
-    public Integer getStep() {
-        return step;
-    }
-
-    public void setStep(Integer step) {
-        this.step = step;
     }
 
     public Long getVersion() {

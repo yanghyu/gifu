@@ -5,12 +5,11 @@ import plus.gifu.data.leaf.segment.model.KeySequence;
 
 public interface KeySequenceMapper {
 
-    @Select("SELECT c_key, c_max_id, c_step, c_version, c_create_timestamp, c_update_timestamp, c_delete_flag " +
-            "FROM t_key_sequence WHERE c_key = #{key}")
+    @Select("SELECT c_key, c_max_id, c_version, c_create_timestamp, c_update_timestamp, c_delete_flag " +
+            "FROM t_key_sequence WHERE c_key = #{key} AND c_delete_flag = 0")
     @Results(value = {
             @Result(column = "c_key", property = "key"),
             @Result(column = "c_max_id", property = "maxId"),
-            @Result(column = "c_step", property = "step"),
             @Result(column = "c_version", property = "version"),
             @Result(column = "c_create_timestamp", property = "createTimestamp"),
             @Result(column = "c_update_timestamp", property = "updateTimestamp"),
@@ -19,8 +18,13 @@ public interface KeySequenceMapper {
     KeySequence get(@Param("key") String key);
 
     @Insert("INSERT INTO t_key_sequence " +
-            "(c_key, c_max_id, c_step, c_version, c_create_timestamp, c_update_timestamp, c_delete_flag) " +
-            "VALUES (#{key}, #{maxId}, #{step}, #{version}, #{createTimestamp}, #{updateTimestamp}, #{deleteFlag})")
+            "(c_key, c_max_id, c_version, c_create_timestamp, c_update_timestamp, c_delete_flag) " +
+            "VALUES (#{key}, #{maxId}, #{version}, #{createTimestamp}, #{updateTimestamp}, #{deleteFlag})")
     void insert(@Param("keySequence") KeySequence keySequence);
+
+    @Update("UPDATE t_key_sequence " +
+            "SET c_max_id = #{maxId}, c_version = #{version}, c_update_timestamp = #{updateTimestamp} " +
+            "WHERE c_key = #{key} AND c_version = #{version} - 1 AND c_delete_flag = 0")
+    Integer updateMaxId(@Param("keySequence") KeySequence keySequence);
 
 }

@@ -1,8 +1,10 @@
 package plus.gifu.data.leaf.segment.generater;
 
 import plus.gifu.data.leaf.segment.dao.KeySequenceDao;
+import plus.gifu.data.leaf.segment.handler.SequenceHandler;
 import plus.gifu.data.leaf.segment.model.IdResult;
 import plus.gifu.data.leaf.segment.model.KeySequence;
+import plus.gifu.data.leaf.segment.model.SequenceSegment;
 
 import javax.sql.DataSource;
 
@@ -14,17 +16,17 @@ import javax.sql.DataSource;
  */
 public class IdGeneratorImpl implements IdGenerator {
 
-    private final KeySequenceDao keySequenceDao;
+    private final SequenceHandler sequenceHandler;
 
-    public IdGeneratorImpl(DataSource dataSource) {
-        this.keySequenceDao = new KeySequenceDao(dataSource);
+    public IdGeneratorImpl(SequenceHandler sequenceHandler) {
+        this.sequenceHandler = sequenceHandler;
     }
 
     @Override
     public IdResult generateId(String key) {
-        KeySequence keySequence = keySequenceDao.get(key);
+        SequenceSegment sequenceSegment = sequenceHandler.getSegment(key, 5);
         IdResult idResult = new IdResult();
-        idResult.setId(keySequence.getMaxId());
+        idResult.setId(sequenceSegment.getMaxId());
         return idResult;
     }
 
