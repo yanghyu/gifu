@@ -1,12 +1,8 @@
 package plus.gifu.data.leaf.segment.generater;
 
-import plus.gifu.data.leaf.segment.dao.KeySequenceDao;
 import plus.gifu.data.leaf.segment.handler.SequenceHandler;
 import plus.gifu.data.leaf.segment.model.IdResult;
-import plus.gifu.data.leaf.segment.model.KeySequence;
 import plus.gifu.data.leaf.segment.model.SequenceSegment;
-
-import javax.sql.DataSource;
 
 /**
  * ID 生成器
