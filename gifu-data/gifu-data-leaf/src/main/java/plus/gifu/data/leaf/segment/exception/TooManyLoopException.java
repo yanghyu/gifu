@@ -1,9 +1,9 @@
 package plus.gifu.data.leaf.segment.exception;
 
 /**
- * 无键异常
+ * 陷入死循环异常
  *
  * @author yanghongyu
  */
-public class NoSuchKeyException extends Exception {
+public class TooManyLoopException extends Exception {
 }
