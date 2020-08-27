@@ -30,9 +30,17 @@ public class KeySequenceDao {
         }
     }
 
-    public Integer updateMaxId(KeySequence keySequence) {
+    public int insert(KeySequence keySequence) {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()){
-            Integer num = sqlSession.update("plus.gifu.data.leaf.segment.mapper.KeySequenceMapper.updateMaxId", keySequence);
+            int num = sqlSession.insert("plus.gifu.data.leaf.segment.mapper.KeySequenceMapper.insert", keySequence);
+            sqlSession.commit();
+            return num;
+        }
+    }
+
+    public int updateMaxId(KeySequence keySequence) {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()){
+            int num = sqlSession.update("plus.gifu.data.leaf.segment.mapper.KeySequenceMapper.updateMaxId", keySequence);
             sqlSession.commit();
             return num;
         }

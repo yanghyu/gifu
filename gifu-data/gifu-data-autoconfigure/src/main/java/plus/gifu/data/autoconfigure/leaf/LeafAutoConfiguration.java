@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import plus.gifu.data.leaf.segment.generater.IdGenerator;
 import plus.gifu.data.leaf.segment.generater.IdGeneratorImpl;
-import plus.gifu.data.leaf.segment.handler.SequenceHandler;
+import plus.gifu.data.leaf.segment.handler.SegmentHandler;
 
 import javax.sql.DataSource;
 
@@ -23,12 +23,12 @@ import javax.sql.DataSource;
 public class LeafAutoConfiguration {
 
     @Bean
-    public SequenceHandler sequenceHandler(DataSource dataSource){
-        return new SequenceHandler(dataSource);
+    public SegmentHandler sequenceHandler(DataSource dataSource){
+        return new SegmentHandler(dataSource);
     }
 
     @Bean
-    public IdGenerator idGenerator(SequenceHandler sequenceHandle) {
+    public IdGenerator idGenerator(SegmentHandler sequenceHandle) {
         return new IdGeneratorImpl(sequenceHandle);
     }
 

@@ -1,10 +1,8 @@
 package plus.gifu.data.leaf.segment.generater;
 
-import plus.gifu.data.leaf.segment.exception.NoSuchKeyException;
-import plus.gifu.data.leaf.segment.exception.TooManyLoopException;
-import plus.gifu.data.leaf.segment.handler.SequenceHandler;
+import plus.gifu.data.leaf.segment.handler.SegmentHandler;
 import plus.gifu.data.leaf.segment.model.IdResult;
-import plus.gifu.data.leaf.segment.model.SequenceSegment;
+import plus.gifu.data.leaf.segment.model.Segment;
 
 /**
  * ID 生成器
@@ -14,24 +12,18 @@ import plus.gifu.data.leaf.segment.model.SequenceSegment;
  */
 public class IdGeneratorImpl implements IdGenerator {
 
-    private final SequenceHandler sequenceHandler;
+    private final SegmentHandler segmentHandler;
 
-    public IdGeneratorImpl(SequenceHandler sequenceHandler) {
-        this.sequenceHandler = sequenceHandler;
+    public IdGeneratorImpl(SegmentHandler segmentHandler) {
+        this.segmentHandler = segmentHandler;
     }
 
     @Override
     public IdResult generateId(String key) {
-        SequenceSegment sequenceSegment = null;
+        Segment segment = null;
         IdResult idResult = new IdResult();
-        try {
-            sequenceSegment = sequenceHandler.getSegment(key, 5);
-            idResult.setId(sequenceSegment.getMaxId());
-        } catch (NoSuchKeyException e) {
-            e.printStackTrace();
-        } catch (TooManyLoopException e) {
-            e.printStackTrace();
-        }
+        segment = segmentHandler.getSegment(key, 5);
+        idResult.setId(segment.getMaxId());
         return idResult;
     }
 

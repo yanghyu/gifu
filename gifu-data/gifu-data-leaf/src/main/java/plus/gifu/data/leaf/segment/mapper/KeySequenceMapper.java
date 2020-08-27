@@ -20,11 +20,11 @@ public interface KeySequenceMapper {
     @Insert("INSERT INTO t_key_sequence " +
             "(c_key, c_max_id, c_version, c_create_timestamp, c_update_timestamp, c_delete_flag) " +
             "VALUES (#{key}, #{maxId}, #{version}, #{createTimestamp}, #{updateTimestamp}, #{deleteFlag})")
-    void insert(@Param("keySequence") KeySequence keySequence);
+    int insert(@Param("keySequence") KeySequence keySequence);
 
     @Update("UPDATE t_key_sequence " +
             "SET c_max_id = #{maxId}, c_version = #{version}, c_update_timestamp = #{updateTimestamp} " +
             "WHERE c_key = #{key} AND c_version = #{version} - 1 AND c_delete_flag = 0")
-    Integer updateMaxId(@Param("keySequence") KeySequence keySequence);
+    int updateMaxId(@Param("keySequence") KeySequence keySequence);
 
 }
