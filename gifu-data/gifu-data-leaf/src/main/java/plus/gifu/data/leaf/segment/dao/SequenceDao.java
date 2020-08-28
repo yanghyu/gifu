@@ -7,40 +7,40 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.apache.ibatis.transaction.TransactionFactory;
 import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
-import plus.gifu.data.leaf.segment.mapper.KeySequenceMapper;
-import plus.gifu.data.leaf.segment.model.KeySequence;
+import plus.gifu.data.leaf.segment.mapper.SequenceMapper;
+import plus.gifu.data.leaf.segment.model.Sequence;
 
 import javax.sql.DataSource;
 
-public class KeySequenceDao {
+public class SequenceDao {
 
     private final SqlSessionFactory sqlSessionFactory;
 
-    public KeySequenceDao(DataSource dataSource) {
+    public SequenceDao(DataSource dataSource) {
         TransactionFactory transactionFactory = new JdbcTransactionFactory();
         Environment environment = new Environment("leaf", transactionFactory, dataSource);
         Configuration configuration = new Configuration(environment);
-        configuration.addMapper(KeySequenceMapper.class);
+        configuration.addMapper(SequenceMapper.class);
         sqlSessionFactory = new SqlSessionFactoryBuilder().build(configuration);
     }
 
-    public KeySequence get(String key) {
+    public Sequence get(String key) {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()){
-            return sqlSession.selectOne("plus.gifu.data.leaf.segment.mapper.KeySequenceMapper.get", key);
+            return sqlSession.selectOne("plus.gifu.data.leaf.segment.mapper.SequenceMapper.get", key);
         }
     }
 
-    public int insert(KeySequence keySequence) {
+    public int insert(Sequence sequence) {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()){
-            int num = sqlSession.insert("plus.gifu.data.leaf.segment.mapper.KeySequenceMapper.insert", keySequence);
+            int num = sqlSession.insert("plus.gifu.data.leaf.segment.mapper.SequenceMapper.insert", sequence);
             sqlSession.commit();
             return num;
         }
     }
 
-    public int updateMaxId(KeySequence keySequence) {
+    public int updateMaxId(Sequence sequence) {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()){
-            int num = sqlSession.update("plus.gifu.data.leaf.segment.mapper.KeySequenceMapper.updateMaxId", keySequence);
+            int num = sqlSession.update("plus.gifu.data.leaf.segment.mapper.SequenceMapper.updateMaxId", sequence);
             sqlSession.commit();
             return num;
         }

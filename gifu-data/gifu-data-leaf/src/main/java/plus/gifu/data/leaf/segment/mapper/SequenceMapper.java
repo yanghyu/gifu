@@ -1,9 +1,9 @@
 package plus.gifu.data.leaf.segment.mapper;
 
 import org.apache.ibatis.annotations.*;
-import plus.gifu.data.leaf.segment.model.KeySequence;
+import plus.gifu.data.leaf.segment.model.Sequence;
 
-public interface KeySequenceMapper {
+public interface SequenceMapper {
 
     @Select("SELECT c_key, c_max_id, c_version, c_create_timestamp, c_update_timestamp, c_delete_flag " +
             "FROM t_key_sequence WHERE c_key = #{key} AND c_delete_flag = 0")
@@ -15,16 +15,16 @@ public interface KeySequenceMapper {
             @Result(column = "c_update_timestamp", property = "updateTimestamp"),
             @Result(column = "c_delete_flag", property = "deleteFlag")
     })
-    KeySequence get(@Param("key") String key);
+    Sequence get(@Param("key") String key);
 
     @Insert("INSERT INTO t_key_sequence " +
             "(c_key, c_max_id, c_version, c_create_timestamp, c_update_timestamp, c_delete_flag) " +
             "VALUES (#{key}, #{maxId}, #{version}, #{createTimestamp}, #{updateTimestamp}, #{deleteFlag})")
-    int insert(@Param("keySequence") KeySequence keySequence);
+    int insert(@Param("keySequence") Sequence sequence);
 
     @Update("UPDATE t_key_sequence " +
             "SET c_max_id = #{maxId}, c_version = #{version}, c_update_timestamp = #{updateTimestamp} " +
             "WHERE c_key = #{key} AND c_version = #{version} - 1 AND c_delete_flag = 0")
-    int updateMaxId(@Param("keySequence") KeySequence keySequence);
+    int updateMaxId(@Param("keySequence") Sequence sequence);
 
 }

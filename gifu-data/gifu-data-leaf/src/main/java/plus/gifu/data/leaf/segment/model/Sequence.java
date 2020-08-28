@@ -6,7 +6,7 @@ package plus.gifu.data.leaf.segment.model;
  * @author yanghongyu
  * @since 2020-06-18
  */
-public class KeySequence {
+public class Sequence {
 
     /**
      * 主键

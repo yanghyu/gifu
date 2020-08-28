@@ -1,7 +1,12 @@
 
 ###
+GET http://{{host}}/ids/next?key=default1
 
-GET http://{{host}}/ids/next?key=default
+###
+POST http://{{host}}/keys/
+Content-Type: application/x-www-form-urlencoded
+
+key=key2
 
 ###
 

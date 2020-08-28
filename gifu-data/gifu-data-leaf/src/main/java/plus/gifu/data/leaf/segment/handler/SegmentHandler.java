@@ -1,10 +1,10 @@
 package plus.gifu.data.leaf.segment.handler;
 
-import plus.gifu.data.leaf.segment.dao.KeySequenceDao;
-import plus.gifu.data.leaf.segment.exception.TooManyLoopException;
+import plus.gifu.data.leaf.segment.dao.SequenceDao;
 import plus.gifu.data.leaf.segment.exception.InsertKeyException;
-import plus.gifu.data.leaf.segment.model.KeySequence;
+import plus.gifu.data.leaf.segment.exception.TooManyLoopException;
 import plus.gifu.data.leaf.segment.model.Segment;
+import plus.gifu.data.leaf.segment.model.Sequence;
 
 import javax.sql.DataSource;
 import java.util.concurrent.TimeUnit;
@@ -18,15 +18,15 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 public class SegmentHandler {
 
-    private final KeySequenceDao keySequenceDao;
+    private final SequenceDao sequenceDao;
 
     public SegmentHandler(DataSource dataSource) {
-        this.keySequenceDao = new KeySequenceDao(dataSource);
+        this.sequenceDao = new SequenceDao(dataSource);
     }
 
     public Segment getSegment(String key, Integer step) {
         int updateCount, roll = 0;
-        KeySequence keySequence;
+        Sequence sequence;
         do {
             if (roll > 10000) {
                 throw new TooManyLoopException();
@@ -37,22 +37,47 @@ public class SegmentHandler {
                     e.printStackTrace();
                 }
             }
-            keySequence = keySequenceDao.get(key);
-            if (keySequence == null) {
-                throw new InsertKeyException();
+            sequence = sequenceDao.get(key);
+            if (sequence == null) {
+                sequence = insertKey(key, step);
+                if (sequence == null) {
+                    throw new InsertKeyException();
+                }
             }
-            keySequence.setMaxId(keySequence.getMaxId() + step);
-            keySequence.setUpdateTimestamp(System.currentTimeMillis());
-            keySequence.setVersion(keySequence.getVersion() + 1);
-            updateCount = keySequenceDao.updateMaxId(keySequence);
+            sequence.setMaxId(sequence.getMaxId() + step);
+            sequence.setUpdateTimestamp(System.currentTimeMillis());
+            sequence.setVersion(sequence.getVersion() + 1);
+            updateCount = sequenceDao.updateMaxId(sequence);
             roll ++;
         } while (updateCount < 1);
         Segment segment = new Segment();
         segment.setKey(key);
-        segment.setMaxId(keySequence.getMaxId());
-        segment.setSequenceId(new AtomicLong(keySequence.getMaxId() - step));
+        segment.setMaxId(sequence.getMaxId());
+        segment.setSequenceId(new AtomicLong(sequence.getMaxId() - step));
         segment.setStep(step);
         return segment;
+    }
+
+    public Sequence insertKey(String key, Integer step) {
+        Sequence sequence = new Sequence();
+        sequence.setKey(key);
+        sequence.setMaxId(1L + step);
+        sequence.setVersion(0L);
+        long timestamp = System.currentTimeMillis();
+        sequence.setCreateTimestamp(timestamp);
+        sequence.setUpdateTimestamp(timestamp);
+        sequence.setDeleteFlag(false);
+        int count = 0;
+        try {
+            count = sequenceDao.insert(sequence);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (count > 0) {
+            return sequence;
+        } else {
+            return null;
+        }
     }
 
 }
