@@ -39,7 +39,12 @@ public class SegmentHandler {
             }
             sequence = sequenceDao.get(key);
             if (sequence == null) {
-                sequence = insertKey(key, step);
+                synchronized (this) {
+                    sequence = sequenceDao.get(key);
+                    if (sequence == null) {
+                        sequence = insertKey(key, step);
+                    }
+                }
                 if (sequence == null) {
                     throw new InsertKeyException();
                 }

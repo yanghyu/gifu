@@ -1,5 +1,7 @@
 package plus.gifu.data.leaf.segment.exception;
 
+import plus.gifu.data.leaf.segment.message.LeafMessage;
+
 public class LeafException extends RuntimeException {
 
     /**
@@ -12,10 +14,10 @@ public class LeafException extends RuntimeException {
      */
     private String resultMessage;
 
-    public LeafException(String resultCode, String resultMessage) {
+    public LeafException(LeafMessage message) {
         super();
-        this.resultCode = resultCode;
-        this.resultMessage = resultMessage;
+        this.resultCode = message.getResultCode();
+        this.resultMessage = message.getResultMessage();
     }
 
     public String getResultCode() {

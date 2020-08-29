@@ -4,6 +4,10 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 public class SegmentQueue {
 
-    private LinkedBlockingQueue queue;
+    private final LinkedBlockingQueue<Segment> value = new LinkedBlockingQueue<>();
+
+    public LinkedBlockingQueue getValue() {
+        return value;
+    }
 
 }
