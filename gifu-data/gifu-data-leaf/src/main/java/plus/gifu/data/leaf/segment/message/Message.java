@@ -1,10 +1,14 @@
 package plus.gifu.data.leaf.segment.message;
 
-public enum LeafMessage {
+public enum Message {
+
+    SUCCESS("0", "成功"),
 
     INSERT_KEY_EXCEPTION("-1", "新增Key异常"),
 
     TOO_MANY_LOOP_EXCEPTION("-2", "陷入死循环异常"),
+
+    EMPTY_PARAMETER_EXCEPTION("-3", "参数不能为空"),
 
     ;
 
@@ -18,7 +22,7 @@ public enum LeafMessage {
      */
     private final String resultMessage;
 
-    LeafMessage(String resultCode, String resultMessage) {
+    Message(String resultCode, String resultMessage) {
         this.resultCode = resultCode;
         this.resultMessage = resultMessage;
     }

@@ -1,6 +1,6 @@
 package plus.gifu.data.leaf.segment.exception;
 
-import plus.gifu.data.leaf.segment.message.LeafMessage;
+import plus.gifu.data.leaf.segment.message.Message;
 
 /**
  * 新增Key异常
@@ -10,7 +10,7 @@ import plus.gifu.data.leaf.segment.message.LeafMessage;
 public class InsertKeyException extends LeafException {
 
     public InsertKeyException() {
-        super(LeafMessage.INSERT_KEY_EXCEPTION);
+        super(Message.INSERT_KEY_EXCEPTION);
     }
 
 }

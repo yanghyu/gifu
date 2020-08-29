@@ -1,6 +1,6 @@
 package plus.gifu.data.leaf.segment.exception;
 
-import plus.gifu.data.leaf.segment.message.LeafMessage;
+import plus.gifu.data.leaf.segment.message.Message;
 
 /**
  * 陷入死循环异常
@@ -10,7 +10,7 @@ import plus.gifu.data.leaf.segment.message.LeafMessage;
 public class TooManyLoopException extends LeafException {
 
     public TooManyLoopException() {
-        super(LeafMessage.TOO_MANY_LOOP_EXCEPTION);
+        super(Message.TOO_MANY_LOOP_EXCEPTION);
     }
 
 }

@@ -2,10 +2,12 @@ package plus.gifu.data.leaf.segment.generater;
 
 import plus.gifu.data.leaf.segment.handler.SegmentHandler;
 import plus.gifu.data.leaf.segment.model.IdResult;
-import plus.gifu.data.leaf.segment.model.Segment;
 import plus.gifu.data.leaf.segment.model.SegmentQueue;
 
 import java.util.concurrent.ConcurrentHashMap;
+
+import static plus.gifu.data.leaf.segment.message.Message.EMPTY_PARAMETER_EXCEPTION;
+import static plus.gifu.data.leaf.segment.message.Message.SUCCESS;
 
 /**
  * ID 生成器
@@ -25,12 +27,13 @@ public class IdGeneratorImpl implements IdGenerator {
 
     @Override
     public IdResult generateId(String key) {
+        IdResult idResult = new IdResult(SUCCESS);
         if (key == null || "".equals(key)) {
-
+            idResult.setMessage(EMPTY_PARAMETER_EXCEPTION);
+        } else {
+            SegmentQueue segmentQueue = keySegmentQueueMap.get(key);
+            idResult.setId(1L);
         }
-        SegmentQueue segmentQueue = keySegmentQueueMap.get(key);
-        IdResult idResult = new IdResult();
-        idResult.setId(1L);
         return idResult;
     }
 
