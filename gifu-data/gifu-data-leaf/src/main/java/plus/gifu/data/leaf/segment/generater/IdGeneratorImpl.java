@@ -2,6 +2,7 @@ package plus.gifu.data.leaf.segment.generater;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import plus.gifu.data.leaf.segment.exception.LeafException;
 import plus.gifu.data.leaf.segment.handler.SegmentHandler;
 import plus.gifu.data.leaf.segment.model.IdResult;
 import plus.gifu.data.leaf.segment.model.Segment;
@@ -10,8 +11,7 @@ import plus.gifu.data.leaf.segment.model.SegmentQueue;
 import java.util.concurrent.*;
 import java.util.concurrent.locks.Lock;
 
-import static plus.gifu.data.leaf.segment.message.Message.EMPTY_PARAMETER_EXCEPTION;
-import static plus.gifu.data.leaf.segment.message.Message.SUCCESS;
+import static plus.gifu.data.leaf.segment.message.Message.*;
 
 /**
  * ID 生成器
@@ -84,21 +84,49 @@ public class IdGeneratorImpl implements IdGenerator {
                     segmentQueue = newSegmentQueue;
                 }
             }
-            // 2.获取分段
+
             Lock readLock = segmentQueue.getReadLock();
             readLock.lock();
             try {
-                Segment segment = null;
-                do {
-                    segment = segmentQueue.peek();
+                // 2.获取ID
+                while (true) {
+                    Segment segment = segmentQueue.peek();
                     if (segment == null) {
-
+                        applyLoadNewSegment(segmentQueue, key, DEFAULT_STEP);
+                        try {
+                            TimeUnit.MILLISECONDS.sleep(10);
+                        } catch (InterruptedException e) {
+                            logger.error("sleep interrupted exception", e);
+                        }
+                    } else {
+                        long sequenceId = segment.getSequenceId().getAndIncrement();
+                        if (sequenceId < segment.getMaxId()) {
+                            idResult.setId(sequenceId);
+                            // TODO 开启线程加载新的分段
+                            break;
+                        } else {
+                            Lock writeLock = segmentQueue.getWriteLock();
+                            writeLock.lock();
+                            try {
+                                segmentQueue.remove(segment);
+                            } finally {
+                                writeLock.unlock();
+                            }
+                        }
                     }
-                } while (segment == null);
+                }
+            } catch (LeafException le) {
+                idResult.setResultCode(le.getResultCode());
+                idResult.setResultMessage(le.getResultMessage());
+                logger.error("generate id leaf exception, key:{}", key);
+                logger.error("generate id leaf exception", le);
+            } catch (RuntimeException e) {
+                idResult = new IdResult(SYSTEM_EXCEPTION);
+                logger.error("generate id exception, key:{}", key);
+                logger.error("generate id exception", e);
             } finally {
                 readLock.unlock();
             }
-            idResult.setId(1L);
         }
         return idResult;
     }
@@ -128,7 +156,7 @@ public class IdGeneratorImpl implements IdGenerator {
                         if (segment != null) {
                             segmentQueue.offer(segment);
                         }
-                    } catch (Exception e) {
+                    } catch (RuntimeException e) {
                         logger.error("load segment error, key:{} step:{}", key, step);
                         logger.error("load segment error", e);
                     } finally {
@@ -139,9 +167,10 @@ public class IdGeneratorImpl implements IdGenerator {
                     }
                 });
             }
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
             logger.error("apply load segment error, key:{} step:{}", key, step);
             logger.error("apply load segment error", e);
+            throw e;
         } finally {
             writeLock.unlock();
         }

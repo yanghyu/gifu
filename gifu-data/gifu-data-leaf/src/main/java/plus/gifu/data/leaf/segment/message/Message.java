@@ -4,11 +4,13 @@ public enum Message {
 
     SUCCESS("0", "成功"),
 
-    INSERT_KEY_EXCEPTION("-1", "新增Key异常"),
-
-    TOO_MANY_LOOP_EXCEPTION("-2", "陷入死循环异常"),
+    SYSTEM_EXCEPTION("-1", "系统异常"),
 
     EMPTY_PARAMETER_EXCEPTION("-3", "参数不能为空"),
+
+    INSERT_KEY_EXCEPTION("-8", "新增Key异常"),
+
+    TOO_MANY_LOOP_EXCEPTION("-9", "陷入死循环异常"),
 
     ;
 
