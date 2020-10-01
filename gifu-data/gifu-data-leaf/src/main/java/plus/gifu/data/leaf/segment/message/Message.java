@@ -35,4 +35,12 @@ public enum Message {
         return resultMessage;
     }
 
+    @Override
+    public String toString() {
+        return "Message{" +
+                "resultCode='" + resultCode + '\'' +
+                ", resultMessage='" + resultMessage + '\'' +
+                '}';
+    }
+
 }

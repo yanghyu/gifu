@@ -15,7 +15,7 @@ public class LeafException extends RuntimeException {
     private String resultMessage;
 
     public LeafException(Message message) {
-        super();
+        super(message.toString());
         this.resultCode = message.getResultCode();
         this.resultMessage = message.getResultMessage();
     }

@@ -24,7 +24,7 @@ public class SegmentHandler {
         this.sequenceDao = new SequenceDao(dataSource);
     }
 
-    public Segment getSegment(String key, Integer step) {
+    public Segment getSegment(String key, int step) {
         int updateCount, roll = 0;
         Sequence sequence;
         do {
@@ -63,7 +63,7 @@ public class SegmentHandler {
         return segment;
     }
 
-    public Sequence insertKey(String key, Integer step) {
+    public Sequence insertKey(String key, int step) {
         Sequence sequence = new Sequence();
         sequence.setKey(key);
         sequence.setMaxId(1L + step);
