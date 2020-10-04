@@ -7,6 +7,7 @@ import plus.gifu.data.leaf.segment.handler.SegmentHandler;
 import plus.gifu.data.leaf.segment.model.IdResult;
 import plus.gifu.data.leaf.segment.model.Segment;
 import plus.gifu.data.leaf.segment.model.SegmentQueue;
+import plus.gifu.data.leaf.segment.util.LoopUtil;
 
 import java.util.concurrent.*;
 import java.util.concurrent.locks.Lock;
@@ -31,7 +32,12 @@ public class IdGeneratorImpl implements IdGenerator {
     /**
      * 加载新分段最大超时时间（30s）
      */
-    private static final long LOAD_MAX_TIMEOUT = 30000;
+    private static final long LOAD_SEGMENT_MAX_TIMEOUT = 30000L;
+
+    /**
+     * 一个分段期望维持时间为15分钟
+     */
+    private static final long EXPECTED_SEGMENT_DURATION = 900000L;
 
     /**
      * 分段队列缓存列表
@@ -85,35 +91,29 @@ public class IdGeneratorImpl implements IdGenerator {
                 }
             }
 
-            Lock readLock = segmentQueue.getReadLock();
-            readLock.lock();
             try {
-                // 2.获取ID
+                // 2.尝试获取ID
+                int roll = 0;
                 while (true) {
                     Segment segment = segmentQueue.peek();
-                    if (segment == null) {
-                        applyLoadNewSegment(segmentQueue, key, DEFAULT_STEP);
-                        try {
-                            TimeUnit.MILLISECONDS.sleep(10);
-                        } catch (InterruptedException e) {
-                            logger.error("sleep interrupted exception", e);
-                        }
-                    } else {
+                    if (segment != null) {
                         long sequenceId = segment.getSequenceId().getAndIncrement();
-                        if (sequenceId < segment.getMaxId()) {
+                        long remain = segment.getMaxId() - sequenceId;
+                        if (remain > 0) {
                             idResult.setId(sequenceId);
-                            // TODO 开启线程加载新的分段
+                            // 判断是否需要触发线程开启加载新的分段
+                            if (remain * 2 < segment.getStep() && segmentQueue.size() < 2 && isSegmentNotLoading(segmentQueue)) {
+                                int step = calculateStep(segment.getStep(), segment.getUpdateTimestamp());
+                                applyLoadNewSegment(segmentQueue, key, step);
+                            }
                             break;
                         } else {
-                            Lock writeLock = segmentQueue.getWriteLock();
-                            writeLock.lock();
-                            try {
-                                segmentQueue.remove(segment);
-                            } finally {
-                                writeLock.unlock();
-                            }
+                            segmentQueue.remove(segment);
                         }
+                    } else if (segmentQueue.size() < 2 && isSegmentNotLoading(segmentQueue)){
+                        applyLoadNewSegment(segmentQueue, key, DEFAULT_STEP);
                     }
+                    roll = LoopUtil.loopStatus(roll);
                 }
             } catch (LeafException le) {
                 idResult.setResultCode(le.getResultCode());
@@ -124,55 +124,97 @@ public class IdGeneratorImpl implements IdGenerator {
                 idResult = new IdResult(SYSTEM_EXCEPTION);
                 logger.error("generate id exception, key:{}", key);
                 logger.error("generate id exception", e);
-            } finally {
-                readLock.unlock();
             }
         }
         return idResult;
     }
 
     /**
-     * 申请加载新的Segment
+     * 计算步长
+     * @param currentStep 当前步长
+     * @param lastLoadTimestamp 上次加载时间戳
+     * @return 计算出的步长
+     */
+    private int calculateStep(int currentStep, long lastLoadTimestamp) {
+        int step = currentStep;
+        long intervalMillis = System.currentTimeMillis() - lastLoadTimestamp;
+        intervalMillis = Math.max(intervalMillis, EXPECTED_SEGMENT_DURATION / 100);
+        if (intervalMillis < EXPECTED_SEGMENT_DURATION / 2) {
+            step = (int) (currentStep * (Math.round((double) (EXPECTED_SEGMENT_DURATION / intervalMillis)) + 1));
+        } else if (intervalMillis < EXPECTED_SEGMENT_DURATION) {
+            step = currentStep * 2;
+        } else if (intervalMillis > EXPECTED_SEGMENT_DURATION * 2) {
+            step = currentStep / 2;
+        }
+        logger.info("calculate step size, current step:{} interval millis:{} new step:{}", currentStep, intervalMillis, step);
+        return step;
+    }
+
+    /**
+     * 判断Segment加载状态
      *
      * @param segmentQueue 分段对列
+     * @return 是否不在加载中
+     */
+    private boolean isSegmentNotLoading(SegmentQueue segmentQueue) {
+        Lock loadReadLock = segmentQueue.getLoadReadLock();
+        loadReadLock.lock();
+        boolean flag = false;
+        try {
+            if (segmentQueue.isLoading()) {
+                flag = System.currentTimeMillis() - segmentQueue.getLoadStartTimeMillis() <= LOAD_SEGMENT_MAX_TIMEOUT;
+            }
+        } finally {
+            loadReadLock.unlock();
+        }
+        return !flag;
+    }
+
+    /**
+     * 申请加载新的Segment
+     *
+     * @param segmentQueue 分段队列
      * @param key 键
      * @param step 步长
      */
     private void applyLoadNewSegment(SegmentQueue segmentQueue, String key, int step) {
-        Lock writeLock = segmentQueue.getWriteLock();
-        writeLock.lock();
+        Lock loadWriteLock = segmentQueue.getLoadWriteLock();
+        loadWriteLock.lock();
         try {
             if (segmentQueue.isLoading()) {
-                if (System.currentTimeMillis() - segmentQueue.getLoadStartTimeMillis() > LOAD_MAX_TIMEOUT) {
+                if (System.currentTimeMillis() - segmentQueue.getLoadStartTimeMillis() > LOAD_SEGMENT_MAX_TIMEOUT) {
                     segmentQueue.setLoading(false);
                 }
             }
             if (!segmentQueue.isLoading()) {
                 segmentQueue.setLoading(true);
                 segmentQueue.setLoadStartTimeMillis(System.currentTimeMillis());
+                logger.info("apply load segment, key:{} step:{}", key, step);
                 executorService.execute(() -> {
                     try {
+                        // 这里在逻辑上不一定能够成功加载回一个分段
                         Segment segment = segmentHandler.getSegment(key, step);
                         if (segment != null) {
+                            logger.info("load segment success, {}", segment);
                             segmentQueue.offer(segment);
                         }
                     } catch (RuntimeException e) {
-                        logger.error("load segment error, key:{} step:{}", key, step);
-                        logger.error("load segment error", e);
+                        logger.error("load segment exception, key:{} step:{}", key, step);
+                        logger.error("load segment exception", e);
                     } finally {
-                        Lock loadWriteLock = segmentQueue.getWriteLock();
-                        loadWriteLock.lock();
+                        Lock taskLoadWriteLock = segmentQueue.getLoadWriteLock();
+                        taskLoadWriteLock.lock();
                         segmentQueue.setLoading(false);
-                        loadWriteLock.unlock();
+                        taskLoadWriteLock.unlock();
                     }
                 });
             }
         } catch (RuntimeException e) {
-            logger.error("apply load segment error, key:{} step:{}", key, step);
-            logger.error("apply load segment error", e);
+            logger.error("apply load segment exception, key:{} step:{}", key, step);
+            logger.error("apply load segment exception", e);
             throw e;
         } finally {
-            writeLock.unlock();
+            loadWriteLock.unlock();
         }
     }
 

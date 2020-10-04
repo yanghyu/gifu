@@ -3,6 +3,7 @@ package plus.gifu.data.leaf.segment.model;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
@@ -21,9 +22,9 @@ public class SegmentQueue extends LinkedBlockingQueue<Segment> {
     private long loadStartTimeMillis = 0;
 
     /**
-     * 队列锁
+     * Lock held by loading, loadStartTimeMillis, etc.
      */
-    private final ReadWriteLock lock = new ReentrantReadWriteLock();
+    private final ReentrantReadWriteLock lockReadWriteLock = new ReentrantReadWriteLock();
 
     public boolean isLoading() {
         return loading;
@@ -41,12 +42,11 @@ public class SegmentQueue extends LinkedBlockingQueue<Segment> {
         this.loadStartTimeMillis = loadStartTimeMillis;
     }
 
-    public Lock getReadLock() {
-        return lock.readLock();
+    public Lock getLoadReadLock() {
+        return lockReadWriteLock.readLock();
     }
 
-    public Lock getWriteLock() {
-        return lock.writeLock();
+    public Lock getLoadWriteLock() {
+        return lockReadWriteLock.writeLock();
     }
-
 }

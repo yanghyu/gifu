@@ -1,13 +1,14 @@
 package plus.gifu.data.leaf.segment.handler;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import plus.gifu.data.leaf.segment.dao.SequenceDao;
 import plus.gifu.data.leaf.segment.exception.InsertKeyException;
-import plus.gifu.data.leaf.segment.exception.TooManyLoopException;
 import plus.gifu.data.leaf.segment.model.Segment;
 import plus.gifu.data.leaf.segment.model.Sequence;
+import plus.gifu.data.leaf.segment.util.LoopUtil;
 
 import javax.sql.DataSource;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
@@ -17,6 +18,8 @@ import java.util.concurrent.atomic.AtomicLong;
  * @since 2020-08-25
  */
 public class SegmentHandler {
+
+    private static final Logger logger = LoggerFactory.getLogger(SegmentHandler.class);
 
     private final SequenceDao sequenceDao;
 
@@ -28,15 +31,7 @@ public class SegmentHandler {
         int updateCount, roll = 0;
         Sequence sequence;
         do {
-            if (roll > 10000) {
-                throw new TooManyLoopException();
-            } else if (roll > 1000) {
-                try {
-                    TimeUnit.MILLISECONDS.sleep(10);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
+            roll = LoopUtil.loopStatus(roll);
             sequence = sequenceDao.get(key);
             if (sequence == null) {
                 synchronized (this) {
@@ -53,13 +48,13 @@ public class SegmentHandler {
             sequence.setUpdateTimestamp(System.currentTimeMillis());
             sequence.setVersion(sequence.getVersion() + 1);
             updateCount = sequenceDao.updateMaxId(sequence);
-            roll ++;
         } while (updateCount < 1);
         Segment segment = new Segment();
         segment.setKey(key);
         segment.setMaxId(sequence.getMaxId());
         segment.setSequenceId(new AtomicLong(sequence.getMaxId() - step));
         segment.setStep(step);
+        segment.setUpdateTimestamp(sequence.getUpdateTimestamp());
         return segment;
     }
 
@@ -75,8 +70,9 @@ public class SegmentHandler {
         int count = 0;
         try {
             count = sequenceDao.insert(sequence);
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (RuntimeException e) {
+            logger.error("insert sequence key exception, key:{} step:{}", key, step);
+            logger.error("insert sequence key exception", e);
         }
         if (count > 0) {
             return sequence;

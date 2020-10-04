@@ -11,7 +11,7 @@ import java.util.concurrent.atomic.AtomicLong;
 public class Segment {
 
     /**
-     * 主键
+     * 键
      */
     private String key;
 
@@ -29,6 +29,11 @@ public class Segment {
      * 步长
      */
     private volatile int step;
+
+    /**
+     * 修改时间
+     */
+    private Long updateTimestamp;
 
     public String getKey() {
         return key;
@@ -60,5 +65,24 @@ public class Segment {
 
     public void setStep(int step) {
         this.step = step;
+    }
+
+    public Long getUpdateTimestamp() {
+        return updateTimestamp;
+    }
+
+    public void setUpdateTimestamp(Long updateTimestamp) {
+        this.updateTimestamp = updateTimestamp;
+    }
+
+    @Override
+    public String toString() {
+        return "Segment{" +
+                "key='" + key + '\'' +
+                ", sequenceId=" + sequenceId +
+                ", maxId=" + maxId +
+                ", step=" + step +
+                ", updateTimestamp=" + updateTimestamp +
+                '}';
     }
 }
