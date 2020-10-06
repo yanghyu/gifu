@@ -4,8 +4,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>gifu-data-parent</artifactId>
-        <groupId>plus.gifu.data</groupId>
+        <groupId>com.github.yanghyu</groupId>
         <version>1.0-SNAPSHOT</version>
+        <relativePath>../gifu-data-parent</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -21,7 +22,7 @@
             <artifactId>spring-boot-autoconfigure</artifactId>
         </dependency>
         <dependency>
-            <groupId>plus.gifu.data</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>gifu-data-leaf</artifactId>
             <optional>true</optional>
         </dependency>

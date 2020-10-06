@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  plus.gifu.data.autoconfigure.leaf.LeafAutoConfiguration
+  com.github.yanghyu.gifu.data.autoconfigure.leaf.LeafAutoConfiguration
