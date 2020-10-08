@@ -2,12 +2,41 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>org.sonatype.oss</groupId>
+        <artifactId>oss-parent</artifactId>
+        <version>7</version>
+    </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.github.yanghyu</groupId>
     <artifactId>gifu-mq-dependencies</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0-RELEASE</version>
     <packaging>pom</packaging>
+    <name>gifu-mq-dependencies</name>
+    <description>Gifu MQ Dependencies</description>
+    <url>https://github.com/yanghyu/gifu</url>
+
+    <licenses>
+        <license>
+            <name>The Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>Yang Hongyu</name>
+            <email>869752070@qq.com</email>
+            <url>https://github.com/yanghyu</url>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:https://github.com/yanghyu/gifu.git</connection>
+        <developerConnection>scm:git:git@github.com:yanghyu/gifu.git</developerConnection>
+        <url>https://github.com/yanghyu/gifu</url>
+    </scm>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -16,19 +45,5 @@
         <maven.compiler.target>8</maven.compiler.target>
         <java.version>1.8</java.version>
     </properties>
-
-    <distributionManagement>
-        <repository>
-            <!-- 此id要与setting.xml里面server的id对应 -->
-            <id>gifu-releases</id>
-            <name>Gifu Releases Repository</name>
-            <url>http://nexus.gifu.plus:30500/repository/maven-releases/</url>
-        </repository>
-        <snapshotRepository>
-            <id>gifu-snapshots</id>
-            <name>Gifu Snapshots Repository</name>
-            <url>http://nexus.gifu.plus:30500/repository/maven-snapshots/</url>
-        </snapshotRepository>
-    </distributionManagement>
 
 </project>

@@ -5,12 +5,14 @@
     <parent>
         <artifactId>gifu-mq-dependencies</artifactId>
         <groupId>com.github.yanghyu</groupId>
-        <version>1.0-SNAPSHOT</version>
+        <version>1.0.0-RELEASE</version>
         <relativePath>../gifu-mq-dependencies</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>gifu-mq-parent</artifactId>
     <packaging>pom</packaging>
+    <name>gifu-mq-parent</name>
+    <description>Gifu MQ Parent</description>
 
 </project>

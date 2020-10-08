@@ -5,12 +5,14 @@
     <parent>
         <artifactId>gifu-foundation-starter</artifactId>
         <groupId>com.github.yanghyu</groupId>
-        <version>1.0-SNAPSHOT</version>
+        <version>1.0.0-RELEASE</version>
         <relativePath>../</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>gifu-foundation-starter-encryption</artifactId>
+    <name>gifu-foundation-starter-encryption</name>
+    <description>Gifu Foundation Starter Encryption</description>
 
     <dependencies>
         <dependency>
