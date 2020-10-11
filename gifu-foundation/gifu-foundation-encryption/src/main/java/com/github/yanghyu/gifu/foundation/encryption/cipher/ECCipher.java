@@ -39,6 +39,8 @@ public class ECCipher {
 
     /**
      * 生成密钥对
+     *
+     * @return 密钥对
      */
     public static KeyPair getKeyPair() throws Exception {
         KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(ALGORITHM, PROVIDER_NAME);//BouncyCastle
@@ -48,6 +50,9 @@ public class ECCipher {
 
     /**
      * 获取公钥
+     *
+     * @param keyPair 密钥对
+     * @return 公钥
      */
     public static String getPublicKey(KeyPair keyPair) {
         ECPublicKey publicKey = (ECPublicKey) keyPair.getPublic();
@@ -57,6 +62,9 @@ public class ECCipher {
 
     /**
      * 获取私钥
+     *
+     * @param keyPair 密钥对
+     * @return 私钥
      */
     public static String getPrivateKey(KeyPair keyPair) {
         ECPrivateKey privateKey = (ECPrivateKey) keyPair.getPrivate();
@@ -66,6 +74,10 @@ public class ECCipher {
 
     /**
      * 公钥加密
+     *
+     * @param content 明文
+     * @param publicKey 公钥
+     * @return 密文
      */
     public static byte[] encrypt(byte[] content, ECPublicKey publicKey) throws Exception {
         Cipher cipher = Cipher.getInstance(CIPHER, PROVIDER_NAME);
@@ -75,6 +87,10 @@ public class ECCipher {
 
     /**
      * 私钥解密
+     *
+     * @param content 密文
+     * @param privateKey 私钥
+     * @return 明文
      */
     public static byte[] decrypt(byte[] content, ECPrivateKey privateKey) throws Exception {
         Cipher cipher = Cipher.getInstance(CIPHER, PROVIDER_NAME);
@@ -84,6 +100,10 @@ public class ECCipher {
 
     /**
      * 私钥签名
+     *
+     * @param content 内容
+     * @param privateKey 私钥
+     * @return 签名
      */
     public static byte[] sign(String content, ECPrivateKey privateKey) throws Exception {
         Signature signature = Signature.getInstance(SIGNATURE);
@@ -94,6 +114,11 @@ public class ECCipher {
 
     /**
      * 公钥验签
+     *
+     * @param content 内容
+     * @param sign 签名
+     * @param publicKey 公钥
+     * @return 结果
      */
     public static boolean verify(String content, byte[] sign, ECPublicKey publicKey) throws Exception {
         Signature signature = Signature.getInstance(SIGNATURE);

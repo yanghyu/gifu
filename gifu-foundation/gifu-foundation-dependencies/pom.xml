@@ -44,6 +44,7 @@
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
         <java.version>1.8</java.version>
+        <javadocExecutable>${java.home}/../bin/javadoc</javadocExecutable>
 
         <lombok.version>1.18.12</lombok.version>
         <slf4j.version>1.7.25</slf4j.version>
