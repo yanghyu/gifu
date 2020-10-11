@@ -48,6 +48,8 @@
 
         <spring-boot.version>2.1.2.RELEASE</spring-boot.version>
         <mybatis.version>3.3.0</mybatis.version>
+
+        <junit-jupiter.version>5.7.0-M1</junit-jupiter.version>
     </properties>
 
     <dependencyManagement>
@@ -63,6 +65,13 @@
                 <groupId>org.mybatis</groupId>
                 <artifactId>mybatis</artifactId>
                 <version>${mybatis.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter</artifactId>
+                <version>${junit-jupiter.version}</version>
+                <scope>test</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
