@@ -24,9 +24,14 @@ public class IdGeneratorImpl implements IdGenerator {
     private static final Logger logger = LoggerFactory.getLogger(IdGeneratorImpl.class);
 
     /**
-     * 默认步长
+     * 最小步长
      */
-    private static final int DEFAULT_STEP = 1000;
+    private static final int MIN_STEP = 1000;
+
+    /**
+     * 最大步长
+     */
+    private static final int MAX_STEP = 500000;
 
     /**
      * 加载新分段最大超时时间（30s）
@@ -110,7 +115,7 @@ public class IdGeneratorImpl implements IdGenerator {
                             segmentQueue.remove(segment);
                         }
                     } else if (segmentQueue.size() < 2 && isSegmentNotLoading(segmentQueue)){
-                        applyLoadNewSegment(segmentQueue, key, DEFAULT_STEP);
+                        applyLoadNewSegment(segmentQueue, key, MIN_STEP);
                     }
                     roll = LoopUtil.loopStatus(roll);
                 }
@@ -144,6 +149,11 @@ public class IdGeneratorImpl implements IdGenerator {
             step = currentStep * 2;
         } else if (intervalMillis > EXPECTED_SEGMENT_DURATION * 2) {
             step = currentStep / 2;
+        }
+        if (step < MIN_STEP) {
+            step = MIN_STEP;
+        } else if (step > MAX_STEP) {
+            step = MAX_STEP;
         }
         logger.info("calculate step size, current step:{} interval millis:{} new step:{}", currentStep, intervalMillis, step);
         return step;

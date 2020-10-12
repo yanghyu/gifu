@@ -50,6 +50,7 @@
         <slf4j.version>1.7.25</slf4j.version>
         <fastjson.version>1.2.60</fastjson.version>
         <bc.version>1.60</bc.version>
+        <okhttp.version>4.2.2</okhttp.version>
 
         <junit-jupiter.version>5.7.0-M1</junit-jupiter.version>
     </properties>
@@ -75,6 +76,11 @@
                 <groupId>org.bouncycastle</groupId>
                 <artifactId>bcprov-jdk15on</artifactId>
                 <version>${bc.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.squareup.okhttp3</groupId>
+                <artifactId>okhttp</artifactId>
+                <version>${okhttp.version}</version>
             </dependency>
 
             <dependency>
