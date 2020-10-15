@@ -13,7 +13,7 @@
     <groupId>com.github.yanghyu</groupId>
     <artifactId>gifu-mq</artifactId>
     <packaging>pom</packaging>
-    <version>1.0.0-RELEASE</version>
+    <version>1.1.0-RELEASE</version>
     <name>gifu-mq</name>
     <description>Gifu MQ</description>
     <url>https://github.com/yanghyu/gifu</url>

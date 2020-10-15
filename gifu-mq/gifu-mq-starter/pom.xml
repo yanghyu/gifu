@@ -5,7 +5,7 @@
     <parent>
         <artifactId>gifu-mq-parent</artifactId>
         <groupId>com.github.yanghyu</groupId>
-        <version>1.0.0-RELEASE</version>
+        <version>1.1.0-RELEASE</version>
         <relativePath>../gifu-mq-parent</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>

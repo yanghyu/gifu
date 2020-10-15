@@ -12,7 +12,7 @@
 
     <groupId>com.github.yanghyu</groupId>
     <artifactId>gifu-cloud</artifactId>
-    <version>1.0.0-RELEASE</version>
+    <version>1.1.0-RELEASE</version>
     <packaging>pom</packaging>
     <name>gifu-cloud</name>
     <description>Gifu Cloud</description>

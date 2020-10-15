@@ -12,7 +12,7 @@
     <groupId>com.github.yanghyu</groupId>
     <artifactId>gifu-cloud-dependencies</artifactId>
     <packaging>pom</packaging>
-    <version>1.0.0-RELEASE</version>
+    <version>1.1.0-RELEASE</version>
     <name>gifu-cloud-dependencies</name>
     <description>Gifu Cloud Dependencies</description>
     <url>https://github.com/yanghyu/gifu</url>

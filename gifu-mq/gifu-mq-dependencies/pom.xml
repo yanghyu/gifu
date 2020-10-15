@@ -11,7 +11,7 @@
 
     <groupId>com.github.yanghyu</groupId>
     <artifactId>gifu-mq-dependencies</artifactId>
-    <version>1.0.0-RELEASE</version>
+    <version>1.1.0-RELEASE</version>
     <packaging>pom</packaging>
     <name>gifu-mq-dependencies</name>
     <description>Gifu MQ Dependencies</description>
