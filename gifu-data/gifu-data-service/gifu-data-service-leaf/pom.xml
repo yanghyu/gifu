@@ -3,15 +3,15 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>gifu-data-server</artifactId>
+        <artifactId>gifu-data-service</artifactId>
         <groupId>com.github.yanghyu</groupId>
         <version>1.1.0-RELEASE</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>gifu-data-server-leaf</artifactId>
-    <name>gifu-data-server-leaf</name>
-    <description>Gifu Data Server Leaf</description>
+    <artifactId>gifu-data-service-leaf</artifactId>
+    <name>gifu-data-service-leaf</name>
+    <description>Gifu Data Service Leaf</description>
 
     <dependencies>
         <dependency>
