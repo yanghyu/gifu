@@ -21,6 +21,25 @@ Leaf项目的Segment模式核心逻辑思想是很优秀的，在保证基本有
 
 2.使用LinkedBlockingQueue队列进行Segment的预加载。
 
+3.充分利用懒加载，减少定时器的使用。
+
+4.自适应步长增加最大和最小范围限制。
+
+5.不存在的key将会自动创建。
+
+## 项目位置
+
+
+## 如何使用
+
+```
+        <dependency>
+            <groupId>com.github.yanghyu</groupId>
+            <artifactId>gifu-data-starter-leaf</artifactId>
+            <version>1.1.0-RELEASE</version>
+        </dependency>
+```
+
 
 
 

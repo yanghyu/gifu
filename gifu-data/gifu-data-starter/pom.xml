@@ -19,10 +19,6 @@
         <module>gifu-data-starter-leaf</module>
     </modules>
 
-    <properties>
-        <spring-boot.version>2.1.2.RELEASE</spring-boot.version>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
