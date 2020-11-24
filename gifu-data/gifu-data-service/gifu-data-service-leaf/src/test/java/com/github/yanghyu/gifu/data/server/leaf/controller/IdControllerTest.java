@@ -1,21 +1,15 @@
 package com.github.yanghyu.gifu.data.server.leaf.controller;
 
-import com.github.yanghyu.gifu.data.server.leaf.LeafApplication;
 import okhttp3.Call;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import org.junit.jupiter.api.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.boot.SpringApplication;
 
 import java.io.IOException;
 import java.util.Objects;
 
 
 public class IdControllerTest {
-
-    private static final Logger logger = LoggerFactory.getLogger(IdControllerTest.class);
 
     private final OkHttpClient okHttpClient = new OkHttpClient();
 
@@ -37,7 +31,7 @@ public class IdControllerTest {
     @Test
     public void largeFlow() throws IOException {
         long start = System.currentTimeMillis();
-        int num = 100000;
+        int num = 10000;
         for (int i = 0; i < num; i ++) {
             next();
         }
