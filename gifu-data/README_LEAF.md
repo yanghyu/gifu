@@ -27,17 +27,38 @@ Leaf项目的Segment模式核心逻辑思想是很优秀的，在保证基本有
 
 5.不存在的key将会自动创建。
 
-## 项目位置
+## 项目情况
+### 源代码位置
+`https://github.com/yanghyu/gifu/tree/master/gifu-data/gifu-data-leaf`
 
+### 核心代码
+详见`com.github.yanghyu.gifu.data.leaf.segment.generater.IdGeneratorImpl`
 
-## 如何使用
+### 如何使用
+代码示例:`https://github.com/yanghyu/gifu/tree/master/gifu-data/gifu-data-service/gifu-data-service-leaf`
 
+依赖引用:
 ```
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <artifactId>gifu-data-starter</artifactId>
+                <groupId>com.github.yanghyu</groupId>
+                <version>1.1.0-RELEASE</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+    
+    <dependencies>
         <dependency>
             <groupId>com.github.yanghyu</groupId>
             <artifactId>gifu-data-starter-leaf</artifactId>
-            <version>1.1.0-RELEASE</version>
         </dependency>
+    </dependencies>
+    
 ```
 
 
