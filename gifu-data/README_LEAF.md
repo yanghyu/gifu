@@ -1,4 +1,5 @@
 # 分布式ID生成策略（gifu-data-leaf）
+[ 本文位置 ](<https://github.com/yanghyu/gifu/tree/master/gifu-data/README_LEAF.md>)
 
 ## 项目介绍
 
@@ -29,7 +30,8 @@ Leaf项目的Segment模式核心逻辑思想是很优秀的，在保证基本有
 
 ## 项目情况
 ### 源代码位置
-`https://github.com/yanghyu/gifu/tree/master/gifu-data/gifu-data-leaf`
+
+ <https://github.com/yanghyu/gifu/tree/master/gifu-data/gifu-data-leaf>
 
 ### 核心代码
 详见实现类:
@@ -270,7 +272,7 @@ public class IdGeneratorImpl implements IdGenerator {
 ```
 
 ### 如何使用
-代码示例:`https://github.com/yanghyu/gifu/tree/master/gifu-data/gifu-data-service/gifu-data-service-leaf`
+代码示例: <https://github.com/yanghyu/gifu/tree/master/gifu-data/gifu-data-service/gifu-data-service-leaf>
 
 依赖引用:
 ```
