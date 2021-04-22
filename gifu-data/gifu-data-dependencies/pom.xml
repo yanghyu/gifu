@@ -47,7 +47,7 @@
         <javadocExecutable>${java.home}/../bin/javadoc</javadocExecutable>
 
         <spring-boot.version>2.1.2.RELEASE</spring-boot.version>
-        <mybatis.version>3.3.0</mybatis.version>
+        <mybatis.version>3.5.6</mybatis.version>
         <okhttp.version>4.2.2</okhttp.version>
 
         <junit-jupiter.version>5.7.0-M1</junit-jupiter.version>
